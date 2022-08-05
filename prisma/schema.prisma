@@ -1,0 +1,139 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Prompt {
+  id String @id @unique @default(uuid())
+
+  createdAt DateTime @default(now())
+
+  title String @db.VarChar(250)
+
+  text String @db.VarChar(600)
+
+  author User @relation(fields: [authorId], references: [id])
+
+  circle Circle @relation(fields: [circleId], references: [id])
+
+  circleId String
+
+  posts Post[]
+
+  comments Comment[]
+
+  authorId String
+
+  @@index(authorId)
+  @@index(id)
+}
+
+model Circle {
+  id String @id @default(uuid())
+
+  name String @unique
+
+  createdAt DateTime @default(now())
+
+  description String @db.VarChar(250)
+
+  creator User @relation(fields: [creatorId], references: [id])
+
+  creatorId String
+
+  prompts Prompt[]
+
+  updatedAt DateTime @updatedAt
+
+  bannerImage String
+}
+
+model User {
+  id String @id @default(uuid())
+
+  username String @unique @db.VarChar(50)
+
+  email String @unique
+
+  circles Circle[]
+
+  prompts Prompt[]
+
+  posts Post[]
+
+  comments Comment[]
+
+  workspaceSettings WorkspaceSettings?
+
+  @@index(id)
+}
+
+model WorkspaceSettings {
+  id String @id @default(uuid())
+
+  backgroundImage String
+
+  backgroundImageOpacity Int
+
+  textColor String
+
+  owner User @relation(fields: [ownerId], references: [id])
+
+  ownerId String @unique
+}
+
+model Post {
+  id String @id @default(uuid())
+
+  prompt Prompt @relation(fields: [promptId], references: [id])
+
+  promptId String
+
+  createdAt DateTime @default(now())
+
+  dateUpdated DateTime @updatedAt
+
+  published Boolean @default(false)
+
+  title String
+
+  text String
+
+  author User @relation(fields: [authorId], references: [id])
+
+  authorId String
+
+  @@index(promptId)
+  @@index(authorId)
+}
+
+model Comment {
+  id String @id @default(uuid())
+
+  prompt Prompt @relation(fields: [promptId], references: [id])
+
+  promptId String
+
+  author User @relation(fields: [authorId], references: [id])
+
+  authorId String
+
+  text String
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index(promptId)
+  @@index(id)
+  @@index(authorId)
+}
