@@ -12,12 +12,15 @@ export namespace Resources {
     export namespace Users {
 
         export namespace Prompts {
-
+            /**
+             * Returns a list of prompts authored by the user
+             * @param id the id of the author 
+             * @returns 
+             */
             export const get = async (id: string): Promise<Types.Prompt[]> => {
-                const prompts = await instance.prompt.findMany({
+                return await instance.prompt.findMany({
                     where: { id: id }
                 })
-                return prompts;
             }
 
         }
@@ -25,7 +28,7 @@ export namespace Resources {
         export namespace Circles {
 
             export const get = (id: string): Promise<Types.Circle[]> => {
-                throw new Error("Method not implemented.");
+                return await
             }
 
         }
