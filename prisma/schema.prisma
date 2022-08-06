@@ -27,6 +27,8 @@ model Prompt {
 
   circleId String
 
+  badges Badge[]
+
   posts Post[]
 
   comments Comment[]
@@ -35,6 +37,19 @@ model Prompt {
 
   @@index(authorId)
   @@index(id)
+}
+
+model Badge {
+
+  id String @id @default(uuid())
+
+  prompt Prompt @relation(fields: [promptId], references: [id])
+
+  promptId String
+
+  text String @db.VarChar(30)
+
+  @@index(promptId)
 }
 
 model Circle {
@@ -61,6 +76,8 @@ model User {
   id String @id @default(uuid())
 
   username String @unique @db.VarChar(50)
+
+  avatar String @default("")
 
   email String @unique
 
@@ -100,7 +117,7 @@ model Post {
 
   createdAt DateTime @default(now())
 
-  dateUpdated DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   published Boolean @default(false)
 
