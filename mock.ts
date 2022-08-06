@@ -1,4 +1,4 @@
-import { Types } from './types/types'
+import { Types } from './lib/types'
 import { faker } from '@faker-js/faker'
 import { Utils } from './lib/utils'
 const { Arrays } = Utils

@@ -1,5 +1,5 @@
 import { createStyles, Text, Avatar, Group } from '@mantine/core';
-import { Types } from './../types/types';
+import { Types } from '../lib/types';
 
 
 const useStyles = createStyles((theme) => ({

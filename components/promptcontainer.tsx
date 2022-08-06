@@ -1,6 +1,6 @@
 import { Stack } from '@mantine/core';
-import { Types } from '../types/types'
-import Prompt from './prompt';
+import { Types } from '../lib/types'
+import Prompt from './recentprompt';
 
 export interface PromptContainerProps {
   prompts: {
@@ -17,7 +17,7 @@ export default function PromptContainer({ prompts }: PromptContainerProps) {
   return (
     <Stack sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}>
       {prompts.map(prompt => (
-        <Prompt { ...prompt }></Prompt>
+        <Prompt {...prompt}></Prompt>
       ))}
     </Stack>
   );

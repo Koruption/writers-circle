@@ -21,6 +21,8 @@ model Prompt {
 
   text String @db.VarChar(600)
 
+  image String @default("")
+
   author User @relation(fields: [authorId], references: [id])
 
   circle Circle @relation(fields: [circleId], references: [id])
