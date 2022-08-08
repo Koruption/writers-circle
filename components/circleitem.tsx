@@ -1,19 +1,54 @@
-import { NavLink } from '@mantine/core';
-import { IconHome2 } from "@tabler/icons";
+import { NavLink, Avatar, Navbar, ScrollArea, Divider, Text } from '@mantine/core';
+import { IconLayoutList, IconNotebook, IconSpeakerphone, IconPencil } from "@tabler/icons";
+import { Types } from '../lib/types';
 
 export interface CircleItemProps {
   id: string;
   name: string;
   image: string;
   description: string;
+  posts: Types.Post[],
+  selected?: boolean;
 }
 
-export default function CircleItem({ id, name, image, description }: any) {
+export default function CircleItem({ id, name, image, description, posts, selected = false }: CircleItemProps) {
   return (<NavLink
-    key={id}
     label={name}
-    icon={<IconHome2 size={16} stroke={1.5} />}
+    icon={<Avatar src={image} radius='xl' />}
     description={description.slice(0, 25)}
+    defaultOpened={selected}
   >
+    <Divider my="sm" />
+    <Text size={12} color="grey">
+      Actions
+    </Text>
+    <NavLink
+      key="nci0"
+      label="View Prompts"
+      icon={<IconLayoutList size={16} stroke={1.5} />}
+    />
+    <NavLink
+      key="nci1"
+      label="Add Prompt"
+      icon={<IconSpeakerphone size={16} stroke={1.5} />}
+    />
+    <NavLink
+      key="nci2"
+      label="Add Post"
+      icon={<IconPencil size={16} stroke={1.5} />}
+    />
+    <Navbar.Section mt="xs" grow px="xs">
+      <Text size={12} color="grey">
+        Pages
+      </Text>
+      <Divider my="sm" />
+      {posts.map((post: Types.Post) => (
+        <NavLink
+          key={post.id}
+          label={post.title}
+          icon={<IconNotebook size={16} stroke={1.5} />}
+        />
+      ))}
+    </Navbar.Section>
   </NavLink>);
 }

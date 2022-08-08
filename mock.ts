@@ -38,7 +38,7 @@ export namespace Mocking {
       promptId: Arrays.choice(_prompts.map(p => p.id)),
       createdAt: faker.date.recent(),
       updatedAt: faker.date.recent(),
-      title: `{${faker.word.adverb()} ${faker.word.preposition()} ${faker.word.interjection()} ${faker.word.adjective()} ${faker.word.noun()}}`,
+      title: `${faker.word.adverb()} ${faker.word.preposition()} ${faker.word.interjection()} ${faker.word.adjective()} ${faker.word.noun()}`,
       text: faker.lorem.paragraphs(Random.rInt(3, 12)),
       authorId: Arrays.choice(_users.map(u => u.id)),
       published: Arrays.choice([true, false])
@@ -73,12 +73,19 @@ export namespace Mocking {
       name: `${faker.word.adverb()} ${faker.word.noun()}`,
       createdAt: faker.date.recent(),
       updatedAt: faker.date.recent(),
-      bannerImage: Arrays.choice([faker.image.abstract(), faker.image.nature()]),
+      bannerImage: Arrays.choice([
+        faker.image.abstract(),
+        faker.image.nature(),
+        faker.image.cats(),
+        faker.image.city(),
+        faker.image.animals(),
+        faker.image.unsplash.imageUrl(),
+      ]),
       creatorId: Arrays.choice(_users.map(u => u.id)),
       description: faker.lorem.text()
     }
   })
-  
+
   export const data = {
     users: _users,
     circles: _circles,
