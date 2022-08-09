@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface CommentProps {
-  postedAt: string;
+  postedAt: Date;
   text: string;
   author: {
     name: string;
@@ -27,7 +27,7 @@ export default function Comment({ text, author, postedAt }: CommentProps) {
         <div>
           <Text size="sm">{author.name}</Text>
           <Text size="xs" color="dimmed">
-            {postedAt}
+            {postedAt.toLocaleTimeString()}
           </Text>
         </div>
       </Group>

@@ -1,34 +1,14 @@
 import { IconMessageCircle, IconPencil } from '@tabler/icons';
 import { Avatar, Card, Image, Text, Group, Badge, Button, ActionIcon, createStyles, Accordion, Divider, ScrollArea, Grid, Container } from '@mantine/core';
 import { Types } from '../lib/types';
-// const useStyles = createStyles((theme) => ({
-//   card: {
-//     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-//   },
-
-//   section: {
-//     borderBottom: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
-//       }`,
-//     paddingLeft: theme.spacing.md,
-//     paddingRight: theme.spacing.md,
-//     paddingBottom: theme.spacing.md,
-//   },
-
-//   like: {
-//     color: theme.colors.red[6],
-//   },
-
-//   label: {
-//     textTransform: 'uppercase',
-//     fontSize: theme.fontSizes.xs,
-//     fontWeight: 700,
-//   },
-// }));
+import { useState } from 'react';
+import CommentContainer from './commentcontainer';
 
 export interface PromptProps {
   prompt: Types.Prompt;
   badges: Types.Badge[];
-  author: Types.User
+  author: Types.User,
+  comments: Types.Comment[]
 }
 
 export function PromptText({ expand = false, text }: { expand: boolean, text: string }) {
@@ -66,33 +46,41 @@ const useStyles = createStyles((theme) => ({
   body: {
     paddingLeft: 54,
     paddingTop: theme.spacing.sm,
+    marginLeft: '-3.5rem'
   },
   titleSubtext: {
     paddingLeft: 54,
     paddingTop: 25,
+    marginLeft: '-3.5rem'
   },
   title: {
     paddingLeft: 54,
     paddingTop: -30,
+    marginLeft: '-3.5rem'
+  },
+  actions: {
+    paddingTop: 25
+  },
+  promptImage: {
+    marginTop: 25
   }
 }));
 
 export default function RecentPrompt({
   prompt,
   badges,
-  author
-
+  author,
+  comments
 }: PromptProps) {
-  // const { classes, theme } = useStyles();
-  // const {
-  //   createdAt,
-  //   title,
-  //   image,
-  //   text
-  // } = prompt;
   const { classes } = useStyles();
+  const [showComments, setShowComments] = useState(false);
+  const [showPosts, setShowPosts] = useState(false);
+  const onToggleComments = () => {
+    console.log('toggling comments: ', showComments)
+    setShowComments(v => !v);
+  }
   return (
-    <div>
+    <Container style={{ width: '100%' }}>
       <Group>
         <Avatar src={author.avatar} alt={author.username} radius="xl" />
         <div>
@@ -102,62 +90,43 @@ export default function RecentPrompt({
           </Text>
         </div>
       </Group>
+      <Image
+        className={classes.promptImage}
+        src={prompt.image}
+        width={'100%'}
+        height={'35rem'}
+        radius={2}
+      />
       <Text className={classes.titleSubtext} color="dimmed" size="xs">Prompt Title</Text>
-      <Text className={classes.title} size="md">{prompt.title}</Text>
+      <Text className={classes.title} size="xl">{prompt.title}</Text>
       <Text className={classes.body} size="sm">
         {prompt.text}
       </Text>
-      {/* <ActionIcon>do this</ActionIcon> */}
-      <Group position='right'>
+      <Group className={classes.actions}  position='right'>
         <Group>
-          <ActionIcon variant="outline" color="purple"><IconMessageCircle size={16} /></ActionIcon>
+          <ActionIcon
+            variant="outline"
+            color="purple"
+            onClick={onToggleComments}
+          >
+            <IconMessageCircle size={16} />
+          </ActionIcon>
           <Text size="xs">3 comments</Text>
         </Group>
         <Group>
-          <ActionIcon variant="outline" color="purple"><IconPencil size={16} /></ActionIcon>
+          <ActionIcon
+            variant="outline"
+            color="purple"
+          >
+            <IconPencil size={16} />
+          </ActionIcon>
           <Text size="xs">3 posts</Text>
         </Group>
+        <CommentContainer
+          show={showComments}
+          comments={comments}
+        />
       </Group>
-    </div>
+    </Container>
   );
-
-  // return (
-  //   <Card withBorder radius="md" p="md" className={classes.card}>
-  //     <Card.Section>
-  //       <Image src={image} alt={title} height={180} />
-  //     </Card.Section>
-  //     {/* {badges.map((badge) => (
-  //       <Badge
-  //         color={theme.colorScheme === 'dark' ? 'dark' : 'gray'}
-  //         key={badge.id}
-  //       // leftSection={badge.emoji}
-  //       >
-  //         {badge.text}
-  //       </Badge>
-  //     ))} */}
-  //     <Card.Section className={classes.section} mt="md">
-  //       <Group position="apart">
-  //         <Text size="lg" weight={500}>
-  //           {title}
-  //         </Text>
-  //         {/* <Badge size="sm">{country}</Badge> */}
-  //       </Group>
-
-  //       <PromptText
-  //         expand={text.length > 250}
-  //         text={text}
-  //       />
-
-  //     </Card.Section>
-
-  //     <Group mt="xs">
-  //       <Button radius="md" style={{ flex: 1 }}>
-  //         Write
-  //       </Button>
-  //       <ActionIcon variant="default" radius="md" size={36}>
-  //         <IconHeart size={18} className={classes.like} stroke={1.5} />
-  //       </ActionIcon>
-  //     </Group>
-  //   </Card>
-  // );
 }

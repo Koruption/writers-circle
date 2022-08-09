@@ -19,7 +19,5 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ circles }: { circles: Types.Circle[] }) {
-  useRouter().push(`circles/${circles[0].id}`)
-
   return null
 }

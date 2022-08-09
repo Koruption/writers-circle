@@ -9,9 +9,11 @@ export interface CircleItemProps {
   description: string;
   posts: Types.Post[],
   selected?: boolean;
+  onAddPrompt: () => void;
+  onAddPost: () => void;
 }
 
-export default function CircleItem({ id, name, image, description, posts, selected = false }: CircleItemProps) {
+export default function CircleItem({ id, name, image, description, posts, onAddPrompt, onAddPost, selected = false }: CircleItemProps) {
   return (<NavLink
     label={name}
     icon={<Avatar src={image} radius='xl' />}
@@ -30,11 +32,13 @@ export default function CircleItem({ id, name, image, description, posts, select
     <NavLink
       key="nci1"
       label="Add Prompt"
+      onClick={onAddPrompt}
       icon={<IconSpeakerphone size={16} stroke={1.5} />}
     />
     <NavLink
       key="nci2"
       label="Add Post"
+      onClick={onAddPost}
       icon={<IconPencil size={16} stroke={1.5} />}
     />
     <Navbar.Section mt="xs" grow px="xs">
