@@ -1,5 +1,6 @@
 import { NavLink, Avatar, Navbar, ScrollArea, Divider, Text } from '@mantine/core';
 import { IconLayoutList, IconNotebook, IconSpeakerphone, IconPencil } from "@tabler/icons";
+import { useRouter } from 'next/router'
 import { Types } from '../lib/types';
 
 export interface CircleItemProps {
@@ -14,6 +15,7 @@ export interface CircleItemProps {
 }
 
 export default function CircleItem({ id, name, image, description, posts, onAddPrompt, onAddPost, selected = false }: CircleItemProps) {
+  const router = useRouter();
   return (<NavLink
     label={name}
     icon={<Avatar src={image} radius='xl' />}
@@ -38,7 +40,7 @@ export default function CircleItem({ id, name, image, description, posts, onAddP
     <NavLink
       key="nci2"
       label="Add Post"
-      onClick={onAddPost}
+      onClick={()=> { router.push('/posts')}}
       icon={<IconPencil size={16} stroke={1.5} />}
     />
     <Navbar.Section mt="xs" grow px="xs">

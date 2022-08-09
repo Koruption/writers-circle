@@ -3,6 +3,7 @@ import { Avatar, Card, Image, Text, Group, Badge, Button, ActionIcon, createStyl
 import { Types } from '../lib/types';
 import { useState } from 'react';
 import CommentContainer from './commentcontainer';
+import { useRouter } from 'next/router';
 
 export interface PromptProps {
   prompt: Types.Prompt;
@@ -46,23 +47,28 @@ const useStyles = createStyles((theme) => ({
   body: {
     paddingLeft: 54,
     paddingTop: theme.spacing.sm,
-    marginLeft: '-3.5rem'
+    marginLeft: '-3.5rem',
+    zIndex: 2
   },
   titleSubtext: {
     paddingLeft: 54,
     paddingTop: 25,
-    marginLeft: '-3.5rem'
+    marginLeft: '-3.5rem',
+    zIndex: 2
   },
   title: {
     paddingLeft: 54,
     paddingTop: -30,
-    marginLeft: '-3.5rem'
+    marginLeft: '-3.5rem',
+    zIndex: 2
   },
   actions: {
-    paddingTop: 25
+    paddingTop: 25,
+    zIndex: 2
   },
   promptImage: {
-    marginTop: 25
+    marginTop: 25,
+    zIndex: 2
   }
 }));
 
@@ -74,7 +80,7 @@ export default function RecentPrompt({
 }: PromptProps) {
   const { classes } = useStyles();
   const [showComments, setShowComments] = useState(false);
-  const [showPosts, setShowPosts] = useState(false);
+  const router = useRouter();
   const onToggleComments = () => {
     console.log('toggling comments: ', showComments)
     setShowComments(v => !v);
@@ -117,6 +123,7 @@ export default function RecentPrompt({
           <ActionIcon
             variant="outline"
             color="purple"
+            onClick={()=>{router.push(`/posts?prompt=${prompt.title}`)}}
           >
             <IconPencil size={16} />
           </ActionIcon>

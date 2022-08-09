@@ -12,7 +12,7 @@ export async function getServerSideProps() {
   return {
     // props: Mocking.data
     redirect: {
-      destination: `circles/${data.circles[0].id}`,
+      destination: `circles/${data.circles[0].name}`,
       permanent: false
     }
   }

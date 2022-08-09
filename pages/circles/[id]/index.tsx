@@ -23,13 +23,15 @@ import {
   Burger,
   useMantineTheme,
   ScrollArea,
-  Divider,
-  Grid,
   Group,
-  Container
+  Container,
+  Affix,
+  Button,
+  Grid
 } from "@mantine/core";
 import type { AppProps } from "next/app";
 import Router, { useRouter } from "next/router";
+import Image from "next/image";
 import { Types } from "../../../lib/types";
 import { Mocking } from "../../../mock";
 import CircleItem from "../../../components/circleitem";
@@ -79,12 +81,14 @@ export default function Home({ data: { circles, posts, users, prompts, badges, c
           hidden={!opened}
           width={{ sm: 200, lg: 300 }}
         >
-          <Box sx={{ width: 240 }}>
+          <Box >
             <ScrollArea
               style={{ height: 800 }}
               type="never"
             >
-              {circles.map((circle: Types.Circle) => (
+              <Grid grow>
+                <Grid.Col>
+                {circles.map((circle: Types.Circle) => (
                 <CircleItem
                   key={circle.id}
                   id={circle.id}
@@ -96,8 +100,20 @@ export default function Home({ data: { circles, posts, users, prompts, badges, c
                   onAddPrompt={onAddPrompt}
                   selected={current.id === circle.id}
                 />))}
+                </Grid.Col>
+              </Grid>
             </ScrollArea>
+
+          <Box sx={{marginTop: '-1rem'}}>
+      
+              <Button sx={{width: '100%'}}> 
+                Create Circle
+                </Button>
+
+                </Box>
           </Box>
+            {/* <Affix position={{ bottom: 0}}>
+            </Affix> */}
         </Navbar>
       }
       aside={
@@ -192,6 +208,12 @@ export default function Home({ data: { circles, posts, users, prompts, badges, c
           />
 
         </Group>
+        {/* <Image
+          src="/lofi_image.gif"
+          layout="fill"
+          objectFit="cover"
+          style={{ opacity: 0.3 }}
+        /> */}
       </Container>
     </AppShell >
   </>
